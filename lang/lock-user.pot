@@ -1,0 +1,33 @@
+#: ../lock-user.php:106
+#, php-format
+msgid ""
+"User %1$s has tried to log in from %2$s\n"
+"Time: %3$s\n"
+"Browser: %4$s\n"
+msgstr ""
+
+#: ../lock-user.php:117
+#, php-format
+msgid "Country: %1$s\n"
+msgstr ""
+
+#: ../lock-user.php:118
+#, php-format
+msgid "City: %1$s\n"
+msgstr ""
+
+#: ../lock-user.php:122
+msgid "Suspicious login attempt"
+msgstr ""
+
+#: ../views/profile.php:2
+msgid "Lock to IP Addresses"
+msgstr ""
+
+#: ../views/profile.php:7
+msgid "Allowed addresses"
+msgstr ""
+
+#: ../views/profile.php:10
+msgid "One address per line"
+msgstr ""
