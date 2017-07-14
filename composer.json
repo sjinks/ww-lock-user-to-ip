@@ -1,8 +1,9 @@
 {
 	"name" : "wildwolf/wp-lock-user",
-	"version" : "1.0.0",
 	"type" : "wordpress-plugin",
+	"keywords" : ["wordpress", "plugin", "lock", "ip"],
 	"license" : "MIT",
+	"homepage" : "https://github.com/sjinks/wp-lock-user",
 	"authors" : [
 		{
 			"name" : "Volodymyr Kolesnykov",
