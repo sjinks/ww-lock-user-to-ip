@@ -1,9 +1,9 @@
 <?php
 /*
  * Plugin Name: Lock User
- * Plugin URI:
+ * Plugin URI: https://github.com/sjinks/wp-lock-user
  * Description: Locks a user to specific IP addresses
- * Version: 1.0.0
+ * Version: 1.0.2
  * Author: Volodymyr Kolesnykov
  * License: MIT
  * Text Domain: lock-user
@@ -55,23 +55,22 @@ class LockUser
         require __DIR__ . '/views/profile.php';
     }
 
+    private static function isValidIP($ip)
+    {
+        $ip = trim($ip);
+        return $ip && false !== inet_pton($ip);
+    }
+
+    private static function canonicalizeIP($ip)
+    {
+        return inet_ntop(inet_pton($ip));
+    }
+
     private static function ipListToArray($iplist)
     {
-        $list = [];
-        if (!empty($iplist)) {
-            $ips  = explode("\n", $iplist);
-
-            foreach ($ips as $ip) {
-                $ip = trim($ip);
-                if ($ip) {
-                    $ip = inet_pton($ip);
-                    if (false !== $ip) {
-                        $list[] = inet_ntop($ip);
-                    }
-                }
-            }
-        }
-
+        $list = explode("\n", $iplist);
+        $list = array_values(array_filter($list, [__CLASS__, 'isValidIP']));
+        $list = array_map([__CLASS__, 'canonicalizeIP'], $list);
         return $list;
     }
 
@@ -80,7 +79,7 @@ class LockUser
         $iplist = trim(filter_input(INPUT_POST, 'psb_ip_list', FILTER_UNSAFE_RAW));
         $list   = self::ipListToArray($iplist);
 
-        if ($list) {
+        if (!empty($list)) {
             update_user_meta($id, 'psb_ip_list', $list);
         }
         else {
@@ -102,35 +101,39 @@ class LockUser
         );
 
         if (function_exists('geoip_record_by_name')) {
-            $rec = geoip_record_by_name($addr);
-            if (is_array($rec)) {
-                $message .= sprintf(__("Country: %1\$s\n", 'lock-user'), isset($rec['country_name']) ? $rec['country_name'] : '');
-                $message .= sprintf(__("City: %1\$s\n",    'lock-user'), isset($rec['city'])         ? $rec['city']         : '');
-            }
+            $rec      = (array)geoip_record_by_name($addr);
+            $rec      = filter_var_array($rec, ['country_name' => FILTER_DEFAULT, 'city' => FILTER_DEFAULT]);
+            $message .= sprintf(__("Country: %1\$s\n", 'lock-user'), $rec['country_name']);
+            $message .= sprintf(__("City: %1\$s\n",    'lock-user'), $rec['city']);
         }
 
         wp_mail(get_option('admin_email'), __('Suspicious login attempt', 'lock-user'), $message);
+    }
+
+    private static function isAllowedAddress($ips, $cur)
+    {
+        foreach ($ips as $ip) {
+            $ip = inet_pton($ip);
+            if (!strcmp($ip, $cur)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function wp_login($user_login)
     {
         $user = get_user_by('login', $user_login);
         $addr = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
-        if (empty($user) || $user->ID < 1 || empty($addr)) {
+        if (false === $user || empty($addr)) {
             return;
         }
 
         $cur = inet_pton($addr);
         $ips = get_user_meta($user->ID, 'psb_ip_list', true);
 
-        if ($ips) {
-            foreach ($ips as $ip) {
-                $ip = inet_pton($ip);
-                if (!strcmp($ip, $cur)) {
-                    return;
-                }
-            }
-
+        if ($ips && !self::isAllowedAddress($ips, $cur)) {
             self::warnAdmin($user_login, $addr);
 
             wp_logout();

@@ -1,6 +1,7 @@
 {
 	"name" : "wildwolf/wp-lock-user",
 	"type" : "wordpress-plugin",
+	"description" : "WordPress plugin to lock users to specific IP addresses",
 	"keywords" : ["wordpress", "plugin", "lock", "ip"],
 	"license" : "MIT",
 	"homepage" : "https://github.com/sjinks/wp-lock-user",
