@@ -1,4 +1,4 @@
-<?php defined('ABSPATH') or die(); ?>
+<?php defined('ABSPATH') || die(); ?>
 <h3><?=esc_html__('Lock to IP Addresses', 'lock-user')?></h3>
 
 <table class="form-table">

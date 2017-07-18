@@ -12,15 +12,13 @@
 
 namespace WildWolf;
 
-defined('ABSPATH') or die();
-
 class LockUser
 {
     public static function instance()
     {
         static $self = null;
 
-        if (! $self) {
+        if (!$self) {
             $self = new self();
         }
 
@@ -35,7 +33,7 @@ class LockUser
 
     public function plugins_loaded()
     {
-        load_plugin_textdomain('lock-user', false, substr(__DIR__, strlen(WP_PLUGIN_DIR) + 1) . '/lang/');
+        load_plugin_textdomain('lock-user', false, substr(__DIR__, strlen(\WP_PLUGIN_DIR) + 1) . '/lang/');
     }
 
     public function init()
@@ -57,40 +55,72 @@ class LockUser
         require __DIR__ . '/views/profile.php';
     }
 
-    public function edit_user_profile_update($id)
+    private static function ipListToArray($iplist)
     {
-        if (isset($_POST['psb_ip_list'])) {
-            $ips = explode("\n", trim($_POST['psb_ip_list']));
-            $list = array();
+        $list = [];
+        if (!empty($iplist)) {
+            $ips  = explode("\n", $iplist);
+
             foreach ($ips as $ip) {
                 $ip = trim($ip);
                 if ($ip) {
                     $ip = inet_pton($ip);
                     if (false !== $ip) {
-                        $ip = inet_ntop($ip);
-                        $list[] = $ip;
+                        $list[] = inet_ntop($ip);
                     }
                 }
             }
+        }
 
-            if ($list) {
-                update_user_meta($id, 'psb_ip_list', $list);
-            }
-            else {
-                delete_user_meta($id, 'psb_ip_list');
+        return $list;
+    }
+
+    public function edit_user_profile_update($id)
+    {
+        $iplist = trim(filter_input(INPUT_POST, 'psb_ip_list', FILTER_UNSAFE_RAW));
+        $list   = self::ipListToArray($iplist);
+
+        if ($list) {
+            update_user_meta($id, 'psb_ip_list', $list);
+        }
+        else {
+            delete_user_meta($id, 'psb_ip_list');
+        }
+    }
+
+    private static function warnAdmin($user_login, $addr)
+    {
+        $ua      = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+        $message = sprintf(
+            _(
+                "User %1\$s has tried to log in from %2\$s\n"
+                . "Time: %3\$s\n"
+                . "Browser: %4\$s\n",
+                'lock-user'
+            ),
+            $user_login, $addr, date_i18n(get_option('date_format'), time()), $ua
+        );
+
+        if (function_exists('geoip_record_by_name')) {
+            $rec = geoip_record_by_name($addr);
+            if (is_array($rec)) {
+                $message .= sprintf(__("Country: %1\$s\n", 'lock-user'), isset($rec['country_name']) ? $rec['country_name'] : '');
+                $message .= sprintf(__("City: %1\$s\n",    'lock-user'), isset($rec['city'])         ? $rec['city']         : '');
             }
         }
+
+        wp_mail(get_option('admin_email'), __('Suspicious login attempt', 'lock-user'), $message);
     }
 
     public function wp_login($user_login)
     {
-        $user = get_userdatabylogin($user_login);
-        if (empty($user) || $user->ID < 1 || empty($_SERVER['REMOTE_ADDR'])) {
+        $user = get_user_by('login', $user_login);
+        $addr = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+        if (empty($user) || $user->ID < 1 || empty($addr)) {
             return;
         }
 
-        $id  = $user->ID;
-        $cur = inet_pton($_SERVER['REMOTE_ADDR']);
+        $cur = inet_pton($addr);
         $ips = get_user_meta($user->ID, 'psb_ip_list', true);
 
         if ($ips) {
@@ -101,31 +131,15 @@ class LockUser
                 }
             }
 
-            $message = sprintf(
-                _(
-                      "User %1\$s has tried to log in from %2\$s\n"
-                    . "Time: %3\$s\n"
-                    . "Browser: %4\$s\n",
-                    'lock-user'
-                ),
-                $user_login, $_SERVER['REMOTE_ADDR'], date_i18n(get_option('date_format'), time()), $_SERVER['HTTP_USER_AGENT']
-            );
-
-            if (function_exists('geoip_record_by_name')) {
-                $rec = geoip_record_by_name($_SERVER['REMOTE_ADDR']);
-                if (is_array($rec)) {
-                    $message .= sprintf(__("Country: %1\$s\n", 'lock-user'), isset($rec['country_name']) ? $rec['country_name'] : '');
-                    $message .= sprintf(__("City: %1\$s\n",    'lock-user'), isset($rec['city'])         ? $rec['city']         : '');
-                }
-            }
-
-            wp_mail(get_option('admin_email'), __('Suspicious login attempt', 'lock-user'), $message);
+            self::warnAdmin($user_login, $addr);
 
             wp_logout();
             wp_redirect(wp_login_url());
-            exit();
+            die();
         }
     }
 }
 
-LockUser::instance();
+if (defined('ABSPATH')) {
+    LockUser::instance();
+}
