@@ -77,7 +77,7 @@ final class Plugin
 
 		\assert(\is_array($ips));
 
-		$ips   = \array_map('inet_pton', $ips);
+		$ips   = \array_map('inet_pton', /** @scrutinizer ignore-type */ $ips);
 		$found = \in_array($cur, $ips, true);
 
 		if (!$found) {
@@ -103,6 +103,6 @@ final class Plugin
 			$message .= \sprintf(\__("City: %s\n",    'lock-user'), $rec['city']         ?? '');
 		}
 
-		\wp_mail(\get_option('admin_email'), \__('Suspicious login attempt', 'lock-user'), $message);
+		\wp_mail((string)\get_option('admin_email'), \__('Suspicious login attempt', 'lock-user'), $message);
 	}
 }
