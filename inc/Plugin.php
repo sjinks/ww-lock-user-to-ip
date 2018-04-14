@@ -42,7 +42,7 @@ final class Plugin
 	{
 		$ips = \get_user_meta($user->ID, 'psb_ip_list', true);
 		$ips = \is_array($ips) ? \join("\n", $ips) : '';
-		require __DIR__ . '/views/profile.php';
+		require __DIR__ . '/../views/profile.php';
 	}
 
 	private function is_valid_ip(string $ip) : bool
