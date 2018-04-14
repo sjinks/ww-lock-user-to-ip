@@ -86,9 +86,14 @@ final class Plugin
 	{
 		$ip      = $_SERVER['REMOTE_ADDR'];
 		$ua      = $_SERVER['HTTP_USER_AGENT'] ?? '';
+		$now     = \current_time('timestamp', false);
 		$message = \sprintf(
-			\__("User %1\$s has tried to log in from %2\$s\nTime: %3\$s\nBrowser: %4\$s\n", 'lock-user'),
-			$user_login, $ip, \date_i18n((string)\get_option('date_format'), \time()), $ua
+			\__("User %1\$s has tried to log in from %2\$s\nTime: %3\$s %4\$s\nBrowser: %5\$s\n", 'lock-user'),
+			$user_login,
+			$ip,
+			\date_i18n((string)\get_option('date_format'), $now),
+			\date('H:i:s', $now),
+			$ua
 		);
 
 		if (\function_exists('geoip_record_by_name')) {
