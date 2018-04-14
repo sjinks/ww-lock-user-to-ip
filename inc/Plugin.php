@@ -62,15 +62,9 @@ final class Plugin
 
 	public function wp_login($user_login, \WP_User $user)
 	{
-		$cur = \inet_pton($_SERVER['REMOTE_ADDR']);
-		$ips = (array)(\get_user_meta($user->ID, 'psb_ip_list', true) ?: []);
-
-		$ips = \apply_filters('wwlu2ip_allowed_ips', $ips, $user);
-
-		if (empty($ips)) {
-			return;
-		}
-
+		$cur   = \inet_pton($_SERVER['REMOTE_ADDR']);
+		$ips   = (array)(\get_user_meta($user->ID, 'psb_ip_list', true) ?: []);
+		$ips   = \apply_filters('wwlu2ip_allowed_ips', $ips, $user);
 		$ips   = \array_map('inet_pton', /** @scrutinizer ignore-type */ $ips);
 		$found = \in_array($cur, $ips, true);
 
