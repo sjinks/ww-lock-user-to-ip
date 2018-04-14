@@ -51,17 +51,11 @@ final class Plugin
 		return !empty($ip) && false !== \inet_pton($ip);
 	}
 
-	private function canonicalize_ip(string $ip) : string
-	{
-		return \inet_ntop(\inet_pton($ip));
-	}
-
 	public function edit_user_profile_update($id)
 	{
 		$ips = $_POST['psb_ip_list'] ?? '';
 		$ips = \explode("\n", $ips);
 		$ips = \array_filter($ips, [__CLASS__, 'is_valid_ip']);
-		$ips = \array_map([__CLASS__, 'canonicalize_ip'], $ips);
 		$ips = \array_values($ips);
 		\update_user_meta($id, 'psb_ip_list', $ips);
 	}
