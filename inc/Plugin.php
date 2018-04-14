@@ -75,6 +75,8 @@ final class Plugin
 			return;
 		}
 
+		\assert(\is_array($ips));
+
 		$ips   = \array_map('inet_pton', $ips);
 		$found = \in_array($cur, $ips, true);
 
@@ -92,7 +94,7 @@ final class Plugin
 		$ua      = $_SERVER['HTTP_USER_AGENT'] ?? '';
 		$message = \sprintf(
 			\__("User %1\$s has tried to log in from %2\$s\nTime: %3\$s\nBrowser: %4\$s\n", 'lock-user'),
-			$user_login, $ip, \date_i18n(\get_option('date_format'), \time()), $ua
+			$user_login, $ip, \date_i18n((string)\get_option('date_format'), \time()), $ua
 		);
 
 		if (\function_exists('geoip_record_by_name')) {
