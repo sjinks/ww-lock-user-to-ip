@@ -1,4 +1,4 @@
-#: ../lock-user.php:106
+#: ../inc/Plugin.php:84
 #, php-format
 msgid ""
 "User %1$s has tried to log in from %2$s\n"
@@ -6,17 +6,17 @@ msgid ""
 "Browser: %4$s\n"
 msgstr ""
 
-#: ../lock-user.php:117
+#: ../inc/Plugin.php:90
 #, php-format
-msgid "Country: %1$s\n"
+msgid "Country: %s\n"
 msgstr ""
 
-#: ../lock-user.php:118
+#: ../inc/Plugin.php:91
 #, php-format
-msgid "City: %1$s\n"
+msgid "City: %s\n"
 msgstr ""
 
-#: ../lock-user.php:122
+#: ../inc/Plugin.php:94
 msgid "Suspicious login attempt"
 msgstr ""
 
@@ -25,7 +25,7 @@ msgid "Lock to IP Addresses"
 msgstr ""
 
 #: ../views/profile.php:7
-msgid "Allowed addresses"
+msgid "Allowed IP addresses"
 msgstr ""
 
 #: ../views/profile.php:10
