@@ -8,17 +8,28 @@ final class Plugin
 		static $self = null;
 
 		if (!$self) {
+			// @codeCoverageIgnoreStart
+			// The plugin is loaded before code coverage processing
+			// is initialized, therefore the system thinks
+			// that this code never executes
 			$self = new self();
+			// @codeCoverageIgnoreEnd
 		}
 
 		return $self;
 	}
 
+	/**
+	 * @codeCoverageIgnore the plugin is initialized before the coverage processing starts
+	 */
 	private function __construct()
 	{
 		\add_action('init', [$this, 'init']);
 	}
 
+	/**
+	 * @codeCoverageIgnore the plugin is initialized before the coverage processing starts
+	 */
 	public function init()
 	{
 		\load_plugin_textdomain('lock-user', /** @scrutinizer ignore-type */ false, \plugin_basename(\dirname(__DIR__)) . '/lang/');
@@ -28,36 +39,8 @@ final class Plugin
 		}
 
 		if (\is_admin()) {
-			\add_action('admin_init', [$this, 'admin_init']);
+			Admin::instance();
 		}
-	}
-
-	public function admin_init()
-	{
-		\add_action('edit_user_profile_update', [$this, 'edit_user_profile_update']);
-		\add_action('edit_user_profile',        [$this, 'edit_user_profile']);
-	}
-
-	public function edit_user_profile(\WP_User $user)
-	{
-		$ips = \get_user_meta($user->ID, 'psb_ip_list', true);
-		$ips = \is_array($ips) ? \join("\n", $ips) : '';
-		require __DIR__ . '/../views/profile.php';
-	}
-
-	private function is_valid_ip(string $ip) : bool
-	{
-		$ip = \trim($ip);
-		return !empty($ip) && false !== \inet_pton($ip);
-	}
-
-	public function edit_user_profile_update($id)
-	{
-		$ips = $_POST['psb_ip_list'] ?? '';
-		$ips = \explode("\n", $ips);
-		$ips = \array_filter($ips, [__CLASS__, 'is_valid_ip']);
-		$ips = \array_values($ips);
-		\update_user_meta($id, 'psb_ip_list', $ips);
 	}
 
 	public function wp_login($user_login, \WP_User $user)
@@ -66,21 +49,26 @@ final class Plugin
 		$ips   = (array)(\get_user_meta($user->ID, 'psb_ip_list', true) ?: []);
 		$ips   = \apply_filters('wwlu2ip_allowed_ips', $ips, $user);
 		$ips   = \array_map('inet_pton', /** @scrutinizer ignore-type */ $ips);
-		$found = \in_array($cur, $ips, true);
+		$found = empty($ips) || \in_array($cur, $ips, true);
 
 		if (!$found) {
 			\do_action('wwl2uip_user_not_allowed', $user);
 
 			self::notify_admin((string)$user_login);
-			\wp_logout();
-			\wp_redirect(\wp_login_url());
 
 			\do_action('wwl2uip_user_not_allowed_late', $user);
+
+			// @codeCoverageIgnoreStart
+			\wp_logout();
+			\wp_redirect(\wp_login_url());
 			exit();
+			// @codeCoverageIgnoreEnd
 		}
 
 		\do_action('wwl2uip_user_allowed', $user);
+	// @codeCoverageIgnoreStart
 	}
+	// @codeCoverageIgnoreEnd
 
 	private static function notify_admin(string $user_login)
 	{
@@ -97,9 +85,11 @@ final class Plugin
 		);
 
 		if (\function_exists('geoip_record_by_name')) {
+			// @codeCoverageIgnoreStart
 			$rec      = (array)\geoip_record_by_name($ip);
 			$message .= \sprintf(\__("Country: %s\n", 'lock-user'), $rec['country_name'] ?? '');
 			$message .= \sprintf(\__("City: %s\n",    'lock-user'), $rec['city']         ?? '');
+			// @codeCoverageIgnoreEnd
 		}
 
 		\wp_mail((string)\get_option('admin_email'), \__('Suspicious login attempt', 'lock-user'), $message);
