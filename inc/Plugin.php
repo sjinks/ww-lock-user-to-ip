@@ -27,7 +27,9 @@ final class Plugin
 			\add_action('wp_login', [$this, 'wp_login'], 10, 2);
 		}
 
-		\add_action('admin_init', [$this, 'admin_init']);
+		if (\is_admin()) {
+			\add_action('admin_init', [$this, 'admin_init']);
+		}
 	}
 
 	public function admin_init()
@@ -43,17 +45,25 @@ final class Plugin
 		require __DIR__ . '/views/profile.php';
 	}
 
+	private function is_valid_ip(string $ip) : bool
+	{
+		$ip = \trim($ip);
+		return !empty($ip) && false !== \inet_pton($ip);
+	}
+
+	private function canonicalize_ip(string $ip) : string
+	{
+		return \inet_ntop(\inet_pton($ip));
+	}
+
 	public function edit_user_profile_update($id)
 	{
-		if (isset($_POST['psb_ip_list'])) {
-			$ips = \explode("\n", $_POST['psb_ip_list']);
-			$ips = \array_map('trim', $ips);
-			$ips = \array_filter($ips);
-			$ips = \array_map('inet_pton', $ips);
-			$ips = \array_filter($ips);
-			$ips = \array_map('inet_ntop', $ips);
-			\update_user_meta($id, 'psb_ip_list', $ips);
-		}
+		$ips = $_POST['psb_ip_list'] ?? '';
+		$ips = \explode("\n", $ips);
+		$ips = \array_filter($ips, [__CLASS__, 'is_valid_ip']);
+		$ips = \array_map([__CLASS__, 'canonicalize_ip'], $ips);
+		$ips = \array_values($ips);
+		\update_user_meta($id, 'psb_ip_list', $ips);
 	}
 
 	public function wp_login($user_login, \WP_User $user)
@@ -69,7 +79,7 @@ final class Plugin
 		$found = \in_array($cur, $ips, true);
 
 		if (!$found) {
-			self::notify_admin($user_login);
+			self::notify_admin((string)$user_login);
 			\wp_logout();
 			\wp_redirect(\wp_login_url());
 			exit();
