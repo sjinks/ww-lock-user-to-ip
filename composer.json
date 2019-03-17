@@ -1,5 +1,6 @@
 {
 	"name" : "wildwolf/ww-lock-user-to-ip",
+	"description" : "WordPress plugin to lock a WordPress user to specified IP addresses",
 	"type" : "wordpress-plugin",
 	"keywords" : ["wordpress", "plugin", "lock", "ip", "security"],
 	"license" : "MIT",
@@ -18,9 +19,13 @@
 	},
 	"require" : {
 		"php" : ">=7.0.0",
-		"composer/installers" : "~1.0"
+		"composer/installers" : "~1"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^6"
+	},
+	"suggest" : {
+		"wildwolf/wp-login-logger" : "WordPress plugin to log login attempts",
+		"wildwolf/ww-hide-wplogin" : "WordPress plugin to hide wp-login.php and use a custom URL for logging in"
 	}
 }
