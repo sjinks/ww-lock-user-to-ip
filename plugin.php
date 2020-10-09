@@ -3,7 +3,7 @@
  * Plugin Name: WW Lock User to IP
  * Plugin URI:
  * Description: Locks a user to specific IP addresses
- * Version: 2.0.0
+ * Version: 2.0.2
  * Author: Volodymyr Kolesnykov
  * License: MIT
  * Text Domain: lock-user

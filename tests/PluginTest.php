@@ -79,12 +79,12 @@ class PluginTest extends WP_UnitTestCase
 
 			$email = tests_retrieve_phpmailer_instance()->get_sent();
 			$this->assertNotEquals(false, $email);
- 			$this->assertNotEmpty($email->to[0][0]);
- 			$this->assertEquals(get_option('admin_email'), $email->to[0][0]);
+			$this->assertNotEmpty($email->to[0][0]);
+			$this->assertEquals(get_option('admin_email'), $email->to[0][0]);
 
- 			$body = $email->body;
- 			$this->assertContains($user->user_login, $body);
- 			$this->assertContains($_SERVER['REMOTE_ADDR'], $body);
+			$body = $email->body;
+			$this->assertContains($user->user_login, $body);
+			$this->assertContains($_SERVER['REMOTE_ADDR'], $body);
 		}
 	}
 }
