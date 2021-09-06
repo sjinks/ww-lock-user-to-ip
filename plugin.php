@@ -3,8 +3,9 @@
  * Plugin Name: WW Lock User to IP
  * Plugin URI:
  * Description: Locks a user to specific IP addresses
- * Version: 2.0.2
+ * Version: 3.0.0
  * Author: Volodymyr Kolesnykov
+ * Author URI: https://wildwolf.name/
  * License: MIT
  * Text Domain: lock-user
  * Domain Path: /lang
