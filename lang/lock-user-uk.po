@@ -5,32 +5,23 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Language: uk_UA\n"
 "X-Source-Language: C\n"
 
-#: ../inc/Plugin.php:84
+#: ../inc/class-plugin.php:80
 #, php-format
 msgid ""
 "User %1$s has tried to log in from %2$s\n"
-"Time: %3$s\n"
-"Browser: %4$s\n"
+"Time: %3$s (%4$s UTC)\n"
+"Browser: %5$s\n"
 msgstr ""
 "Користувач %1$s спробував зайти в систему з адреси %2$s\n"
-"Час входу: %3$s\n"
-"Браузер: %4$s\n"
+"Час входу: %3$s (%4$s UTC)\n"
+"Браузер: %5$s\n"
 
-#: ../inc/Plugin.php:90
-#, php-format
-msgid "Country: %s\n"
-msgstr "Країна: %s\n"
-
-#: ../inc/Plugin.php:91
-#, php-format
-msgid "City: %s\n"
-msgstr "Місто: %s\n"
-
-#: ../inc/Plugin.php:94
+#: ../inc/class-plugin.php:90
 msgid "Suspicious login attempt"
 msgstr "Підозріла спроба входу"
 
