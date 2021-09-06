@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="ww-lock-user-to-ip">
+	<file>.</file>
+
+	<exclude-pattern>\.git/*</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+
+	<arg name="basepath" value="."/>
+	<arg name="parallel" value="8"/>
+	<arg name="extensions" value="php"/>
+	<arg value="s"/>
+
+	<rule ref="PHPCompatibilityWP"/>
+	<rule ref="WordPress-Core">
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
+		<exclude name="WordPress.PHP.DisallowShortTernary.Found"/>
+	</rule>
+	<rule ref="WordPress-Extra"/>
+
+	<config name="testVersion" value="7.4-"/>
+	<config name="minimum_supported_wp_version" value="5.8"/>
+</ruleset>

@@ -1,22 +1,12 @@
-#: ../inc/Plugin.php:84
+#: ../inc/class-plugin.php:80
 #, php-format
 msgid ""
 "User %1$s has tried to log in from %2$s\n"
-"Time: %3$s\n"
-"Browser: %4$s\n"
+"Time: %3$s (%4$s UTC)\n"
+"Browser: %5$s\n"
 msgstr ""
 
-#: ../inc/Plugin.php:90
-#, php-format
-msgid "Country: %s\n"
-msgstr ""
-
-#: ../inc/Plugin.php:91
-#, php-format
-msgid "City: %s\n"
-msgstr ""
-
-#: ../inc/Plugin.php:94
+#: ../inc/class-plugin.php:90
 msgid "Suspicious login attempt"
 msgstr ""
 
