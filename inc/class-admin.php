@@ -40,7 +40,7 @@ final class Admin {
 	 * @param int $user_id
 	 */
 	public function edit_user_profile_update( $user_id ): void {
-		//phpcs:ignore WordPress.Security.NonceVerification.Missing
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$ips = sanitize_textarea_field( (string) ( $_POST['psb_ip_list'] ?? '' ) );
 		$ips = explode( "\n", $ips );
 		$ips = array_map( 'trim', $ips );

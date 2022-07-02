@@ -85,7 +85,7 @@ final class Plugin {
 			$ua
 		);
 
-		$message = apply_filters( 'wwl2uip_admin_notification_email', $message );
+		$message = (string) apply_filters( 'wwl2uip_admin_notification_email', $message );
 		if ( ! empty( $message ) ) {
 			wp_mail( (string) get_option( 'admin_email' ), __( 'Suspicious login attempt', 'lock-user' ), $message );
 		}

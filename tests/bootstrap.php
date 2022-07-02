@@ -1,6 +1,6 @@
 <?php
 
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 

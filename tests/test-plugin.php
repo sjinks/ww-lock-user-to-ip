@@ -26,7 +26,8 @@ class Test_Plugin extends WP_UnitTestCase /* NOSONAR */ {
 		add_action( 'wwl2uip_user_allowed', [ __CLASS__, 'wp_login_hook' ] );
 		add_action( 'wwl2uip_user_not_allowed_late', [ __CLASS__, 'wp_login_hook' ] );
 
-		$this->setExpectedException( Exception::class, $message );
+		$this->expectException( Exception::class );
+		$this->expectExceptionMessage( $message );
 
 		$_SERVER['REMOTE_ADDR'] = $ip;
 		update_user_meta( 1, 'psb_ip_list', $allowed_ips );

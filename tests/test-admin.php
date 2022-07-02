@@ -19,8 +19,9 @@ class AdminTest extends WP_UnitTestCase {
 	/**
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		wp_set_current_user( 0 );
+		parent::tearDown();
 	}
 
 	/**

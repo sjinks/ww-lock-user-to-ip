@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "977bbd3c12cb94c405b08555581e89b7",
+    "content-hash": "27c66678db13b6468728f6b86762ae89",
     "packages": [
         {
             "name": "composer/installers",
@@ -939,127 +939,6 @@
             "time": "2022-03-02T22:36:06+00:00"
         },
         {
-            "name": "humanmade/psalm-plugin-wordpress",
-            "version": "2.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/humanmade/psalm-plugin-wordpress.git",
-                "reference": "8fe21386fb4ff63d4253322dc3b8eaa1bb71c99f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/humanmade/psalm-plugin-wordpress/zipball/8fe21386fb4ff63d4253322dc3b8eaa1bb71c99f",
-                "reference": "8fe21386fb4ff63d4253322dc3b8eaa1bb71c99f",
-                "shasum": ""
-            },
-            "require": {
-                "ext-simplexml": "*",
-                "johnbillion/wp-hooks": "^0.4.4",
-                "php-stubs/wordpress-stubs": "^5.5",
-                "vimeo/psalm": "^4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0",
-                "psalm/plugin-phpunit": "^0.15.1"
-            },
-            "type": "psalm-plugin",
-            "extra": {
-                "psalm": {
-                    "pluginClass": "PsalmWordPress\\Plugin"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PsalmWordPress\\": [
-                        "."
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Joe Hoyle",
-                    "email": "joehoyle@gmail.com"
-                }
-            ],
-            "description": "WordPress stubs and plugin for Psalm.",
-            "support": {
-                "issues": "https://github.com/humanmade/psalm-plugin-wordpress/issues",
-                "source": "https://github.com/humanmade/psalm-plugin-wordpress/tree/2.0.5"
-            },
-            "time": "2021-05-26T08:45:53+00:00"
-        },
-        {
-            "name": "johnbillion/wp-hooks",
-            "version": "0.4.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johnbillion/wp-hooks.git",
-                "reference": "eb9d32917bb5a0a10a3fc9bedbb3f509f885b769"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johnbillion/wp-hooks/zipball/eb9d32917bb5a0a10a3fc9bedbb3f509f885b769",
-                "reference": "eb9d32917bb5a0a10a3fc9bedbb3f509f885b769",
-                "shasum": ""
-            },
-            "require-dev": {
-                "johnbillion/wp-hooks-generator": "~0.5.0",
-                "oomphinc/composer-installers-extender": "^1.1",
-                "roots/wordpress": "dev-nightly"
-            },
-            "type": "library",
-            "extra": {
-                "wordpress-install-dir": "vendor/wordpress/wordpress",
-                "wp-hooks": {
-                    "ignore-files": [
-                        "wp-admin/includes/deprecated.php",
-                        "wp-admin/includes/ms-deprecated.php",
-                        "wp-content/",
-                        "wp-includes/deprecated.php",
-                        "wp-includes/ID3/",
-                        "wp-includes/IXR/",
-                        "wp-includes/ms-deprecated.php",
-                        "wp-includes/pomo/",
-                        "wp-includes/random_compat/",
-                        "wp-includes/Requests/",
-                        "wp-includes/SimplePie/",
-                        "wp-includes/sodium_compat/",
-                        "wp-includes/Text/"
-                    ],
-                    "ignore-hooks": [
-                        "load-categories.php",
-                        "load-edit-link-categories.php",
-                        "load-edit-tags.php",
-                        "load-page-new.php",
-                        "load-page.php",
-                        "option_enable_xmlrpc",
-                        "pre_option_enable_xmlrpc",
-                        "{$tag}"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "John Blackbourn",
-                    "homepage": "https://johnblackbourn.com/"
-                }
-            ],
-            "description": "All the actions and filters from WordPress core in machine-readable JSON format.",
-            "support": {
-                "issues": "https://github.com/johnbillion/wp-hooks/issues",
-                "source": "https://github.com/johnbillion/wp-hooks/tree/0.4.4"
-            },
-            "time": "2020-08-29T20:58:28+00:00"
-        },
-        {
             "name": "johnpbloch/wordpress-core",
             "version": "6.0.0",
             "source": {
@@ -1438,16 +1317,16 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v5.9.3",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "18d56875e5078a50b8ea4bc4b20b735ca61edeee"
+                "reference": "ce909ee303ce4bb885e5009a739c19b461944166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/18d56875e5078a50b8ea4bc4b20b735ca61edeee",
-                "reference": "18d56875e5078a50b8ea4bc4b20b735ca61edeee",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/ce909ee303ce4bb885e5009a739c19b461944166",
+                "reference": "ce909ee303ce4bb885e5009a739c19b461944166",
                 "shasum": ""
             },
             "replace": {
@@ -1479,9 +1358,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v5.9.3"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.0.0"
             },
-            "time": "2022-04-06T15:33:59+00:00"
+            "time": "2022-05-26T14:35:42+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
