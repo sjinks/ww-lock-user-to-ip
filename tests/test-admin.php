@@ -34,11 +34,11 @@ class AdminTest extends WP_UnitTestCase {
 
 		$inst->admin_init();
 
-		$this->assertEquals( 10, has_action( 'edit_user_profile', [ $inst, 'edit_user_profile' ] ) );
-		$this->assertEquals( 10, has_action( 'edit_user_profile_update', [ $inst, 'edit_user_profile_update' ] ) );
+		self::assertEquals( 10, has_action( 'edit_user_profile', [ $inst, 'edit_user_profile' ] ) );
+		self::assertEquals( 10, has_action( 'edit_user_profile_update', [ $inst, 'edit_user_profile_update' ] ) );
 
-		$this->assertEquals( $admin ? 10 : false, has_action( 'show_user_profile', [ $inst, 'edit_user_profile' ] ) );
-		$this->assertEquals( $admin ? 10 : false, has_action( 'personal_options_update', [ $inst, 'edit_user_profile_update' ] ) );
+		self::assertEquals( $admin ? 10 : false, has_action( 'show_user_profile', [ $inst, 'edit_user_profile' ] ) );
+		self::assertEquals( $admin ? 10 : false, has_action( 'personal_options_update', [ $inst, 'edit_user_profile_update' ] ) );
 	}
 
 	/**
@@ -61,7 +61,7 @@ class AdminTest extends WP_UnitTestCase {
 		$haystack = ob_get_clean();
 
 		$needle = "127.128.129.130\n131.132.133.134";
-		$this->assertStringContainsString( $needle, $haystack );
+		self::assertStringContainsString( $needle, $haystack );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class AdminTest extends WP_UnitTestCase {
 		$inst->edit_user_profile_update( 1 );
 
 		$actual = join( "\n", get_user_meta( 1, 'psb_ip_list', true ) );
-		$this->assertEquals( $expected, $actual );
+		self::assertEquals( $expected, $actual );
 	}
 
 	/**

@@ -12,9 +12,9 @@ class Test_Plugin extends WP_UnitTestCase /* NOSONAR */ {
 
 	public function test_init(): void {
 		$inst = Plugin::instance();
-		$this->assertGreaterThan( 0, did_action( 'init' ) );
+		self::assertGreaterThan( 0, did_action( 'init' ) );
 
-		$this->assertEquals( 10, has_action( 'wp_login', [ $inst, 'wp_login' ] ) );
+		self::assertEquals( 10, has_action( 'wp_login', [ $inst, 'wp_login' ] ) );
 	}
 
 	/**
@@ -66,19 +66,19 @@ class Test_Plugin extends WP_UnitTestCase /* NOSONAR */ {
 
 		try {
 			do_action( 'wp_login', $user->user_login, $user );
-			$this->assertFalse( true );
+			self::assertFalse( true );
 		} catch ( \Exception $e ) {
 			$msg = $e->getMessage();
-			$this->assertEquals( 'wwl2uip_user_not_allowed_late', $msg );
+			self::assertEquals( 'wwl2uip_user_not_allowed_late', $msg );
 
 			$email = tests_retrieve_phpmailer_instance()->get_sent();
-			$this->assertNotEquals( false, $email );
-			$this->assertNotEmpty( $email->to[0][0] );
-			$this->assertEquals( get_option( 'admin_email' ), $email->to[0][0] );
+			self::assertNotEquals( false, $email );
+			self::assertNotEmpty( $email->to[0][0] );
+			self::assertEquals( get_option( 'admin_email' ), $email->to[0][0] );
 
 			$body = $email->body;
-			$this->assertContains( $user->user_login, $body );
-			$this->assertContains( $_SERVER['REMOTE_ADDR'], $body );
+			self::assertStringContainsString( $user->user_login, $body );
+			self::assertStringContainsString( $_SERVER['REMOTE_ADDR'], $body );
 		}
 	}
 }
