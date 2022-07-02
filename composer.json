@@ -28,7 +28,7 @@
 		]
 	},
 	"require": {
-		"php": "^7.3 || ^8.0",
+		"php": "^7.4 || ^8.0",
 		"composer/installers": "^1 || ^2",
 		"wildwolf/singleton-trait": "^1.0"
 	},
@@ -51,7 +51,14 @@
 		"wildwolf/ww-hide-wplogin": "WordPress plugin to hide wp-login.php and use a custom URL for logging in"
 	},
 	"config": {
-		"sort-packages": true
+		"sort-packages": true,
+		"platform": {
+			"php": "7.4"
+		},
+		"allow-plugins": {
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	},
 	"scripts": {
 		"phpcs": "phpcs",
