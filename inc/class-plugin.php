@@ -47,7 +47,7 @@ final class Plugin {
 	 * @psalm-suppress RedundantCastGivenDocblockType
 	 */
 	public function wp_login( $user_login, WP_User $user ): void {
-		$cur   = inet_pton( (string) $_SERVER['REMOTE_ADDR'] );
+		$cur   = inet_pton( Utils::get_server_var( 'REMOTE_ADDR' ) );
 		$ips   = self::get_allowed_ips( $user );
 		$ips   = array_map( 'inet_pton', $ips );
 		$found = empty( $ips ) || in_array( $cur, $ips, true );
@@ -72,8 +72,8 @@ final class Plugin {
 	// @codeCoverageIgnoreEnd
 
 	private static function notify_admin( string $user_login ): void {
-		$ip      = (string) ( $_SERVER['REMOTE_ADDR'] );
-		$ua      = (string) ( $_SERVER['HTTP_USER_AGENT'] ?? '' );
+		$ip      = Utils::get_server_var( 'REMOTE_ADDR' );
+		$ua      = Utils::get_server_var( 'HTTP_USER_AGENT' );
 		$now     = time();
 		$message = sprintf(
 			// translators 1: user login, 2: IP address, 3: local time, 4: UTC time, 5: user agent

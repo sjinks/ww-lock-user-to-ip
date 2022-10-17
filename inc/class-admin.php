@@ -29,7 +29,7 @@ final class Admin {
 		/** @psalm-var string[]|false|"" */
 		$ips = get_user_meta( $user->ID, 'psb_ip_list', true );
 		$ips = is_array( $ips ) ? join( "\n", $ips ) : '';
-		require __DIR__ . '/../views/profile.php';
+		require __DIR__ . '/../views/profile.php'; // NOSONAR
 	}
 
 	private function is_valid_ip( string $ip ): bool {
@@ -41,7 +41,7 @@ final class Admin {
 	 */
 	public function edit_user_profile_update( $user_id ): void {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$ips = sanitize_textarea_field( (string) ( $_POST['psb_ip_list'] ?? '' ) );
+		$ips = sanitize_textarea_field( Utils::get_post_var( 'psb_ip_list' ) );
 		$ips = explode( "\n", $ips );
 		$ips = array_map( 'trim', $ips );
 		$ips = array_filter( $ips, [ __CLASS__, 'is_valid_ip' ] );
