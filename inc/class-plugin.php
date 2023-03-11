@@ -44,7 +44,6 @@ final class Plugin {
 	/**
 	 * @param string $user_login
 	 * @return void
-	 * @psalm-suppress RedundantCastGivenDocblockType
 	 */
 	public function wp_login( $user_login, WP_User $user ): void {
 		$cur   = inet_pton( Utils::get_server_var( 'REMOTE_ADDR' ) );
