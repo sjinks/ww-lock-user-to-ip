@@ -7,7 +7,7 @@ use WildWolf\WordPress\LockUser\Plugin;
  */
 class Test_Plugin extends WP_UnitTestCase /* NOSONAR */ {
 	public static function wp_login_hook(): void {
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CLI
+		// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- CLI
 		throw new Exception( current_filter() ); // NOSONAR
 	}
 
