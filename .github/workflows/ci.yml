@@ -68,6 +68,11 @@ jobs:
         env:
           fail-fast: 'true'
 
+      - name: Install PHPUnit
+        run: |
+          wget -q -O /usr/local/bin/phpunit "https://phar.phpunit.de/phpunit-9.phar"
+          chmod +x /usr/local/bin/phpunit
+  
       - name: Install dependencies
         uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6 # 2.2.0
 
@@ -100,7 +105,7 @@ jobs:
           if [ "${{ steps.coverage.outputs.coverage }}" != 'none' ]; then
             OPTIONS="$OPTIONS --coverage-clover=clover.xml"
           fi
-          vendor/bin/phpunit --order-by=random ${OPTIONS}
+          phpunit --order-by=random ${OPTIONS}
 
       - name: Upload coverage report
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
