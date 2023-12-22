@@ -1,5 +1,6 @@
 *.sh                    text eol=lf
 *.xml.dist              export-ignore
+*.stubs                 export-ignore
 /.github                export-ignore
 /bin/                   export-ignore
 /lang/*.po              export-ignore
