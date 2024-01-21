@@ -23,6 +23,7 @@ final class Plugin {
 	public function init(): void {
 		load_plugin_textdomain( 'lock-user', false, plugin_basename( dirname( __DIR__ ) ) . '/lang/' );
 
+		/** @psalm-suppress RiskyTruthyFalsyComparison */
 		if ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
 			add_action( 'wp_login', [ $this, 'wp_login' ], 10, 2 );
 		}
