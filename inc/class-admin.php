@@ -32,7 +32,7 @@ final class Admin {
 		require __DIR__ . '/../views/profile.php'; // NOSONAR
 	}
 
-	private function is_valid_ip( string $ip ): bool {
+	public function is_valid_ip( string $ip ): bool {
 		return ! empty( $ip ) && false !== inet_pton( $ip );
 	}
 
