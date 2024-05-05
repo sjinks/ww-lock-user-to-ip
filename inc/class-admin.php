@@ -32,7 +32,7 @@ final class Admin {
 		require __DIR__ . '/../views/profile.php'; // NOSONAR
 	}
 
-	public function is_valid_ip( string $ip ): bool {
+	private static function is_valid_ip( string $ip ): bool {
 		return ! empty( $ip ) && false !== inet_pton( $ip );
 	}
 
@@ -44,7 +44,7 @@ final class Admin {
 		$ips = sanitize_textarea_field( Utils::get_post_var( 'psb_ip_list' ) );
 		$ips = explode( "\n", $ips );
 		$ips = array_map( 'trim', $ips );
-		$ips = array_filter( $ips, [ __CLASS__, 'is_valid_ip' ] );
+		$ips = array_filter( $ips, [ static::class, 'is_valid_ip' ] );
 		$ips = array_values( $ips );
 		update_user_meta( $user_id, 'psb_ip_list', $ips );
 	}
