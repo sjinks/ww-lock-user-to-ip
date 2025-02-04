@@ -69,7 +69,7 @@ jobs:
           fail-fast: 'true'
 
       - name: Install svn
-        run: sudo apt-get update && sudo apt-get instal -y subversion
+        run: sudo apt-get update && sudo apt-get install -y subversion
   
       - name: Install dependencies
         uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a # 3.0.0
