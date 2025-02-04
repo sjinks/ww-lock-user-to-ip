@@ -68,10 +68,8 @@ jobs:
         env:
           fail-fast: 'true'
 
-      - name: Install PHPUnit
-        run: |
-          wget -q -O /usr/local/bin/phpunit "https://phar.phpunit.de/phpunit-9.phar"
-          chmod +x /usr/local/bin/phpunit
+      - name: Install svn
+        run: sudo apt-get update && sudo apt-get instal -y subversion
   
       - name: Install dependencies
         uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a # 3.0.0
@@ -105,7 +103,7 @@ jobs:
           if [ "${{ steps.coverage.outputs.coverage }}" != 'none' ]; then
             OPTIONS="$OPTIONS --coverage-clover=clover.xml"
           fi
-          phpunit --order-by=random ${OPTIONS}
+          vendor/bin/phpunit --order-by=random ${OPTIONS}
 
       - name: Upload coverage report
         uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
