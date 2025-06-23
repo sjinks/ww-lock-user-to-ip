@@ -2,7 +2,7 @@
 <psalm
     errorLevel="1"
     resolveFromConfigFile="true"
-    phpVersion="8.1"
+    phpVersion="8.3"
     findUnusedPsalmSuppress="true"
     findUnusedBaselineEntry="true"
     findUnusedCode="true"
@@ -23,6 +23,7 @@
         <RedundantCast errorLevel="suppress"/>
         <RedundantCastGivenDocblockType errorLevel="suppress"/>
         <UnusedClass errorLevel="suppress"/>
+        <UnusedParam errorLevel="suppress"/>
     </issueHandlers>
     <stubs>
         <file name="vendor/php-stubs/wordpress-stubs/wordpress-stubs.php"/>

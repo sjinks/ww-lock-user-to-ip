@@ -5,7 +5,7 @@ use WildWolf\WordPress\LockUser\Admin;
 /**
  * @covers \WildWolf\WordPress\LockUser\Admin
  */
-class AdminTest extends WP_UnitTestCase {
+final class AdminTest extends WP_UnitTestCase {
 	/** @var int */
 	private static $admin_id;
 	/** @var int */
