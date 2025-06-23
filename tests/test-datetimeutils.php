@@ -2,7 +2,7 @@
 
 use WildWolf\WordPress\LockUser\DateTimeUtils;
 
-class Test_DateTimeUtils extends WP_UnitTestCase /* NOSONAR */ {
+final class Test_DateTimeUtils extends WP_UnitTestCase /* NOSONAR */ {
 	/**
 	 * @covers \WildWolf\WordPress\LockUser\DateTimeUtils::format_date_time
 	 */

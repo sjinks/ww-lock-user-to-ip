@@ -5,7 +5,7 @@ use WildWolf\WordPress\LockUser\Plugin;
 /**
  * @covers \WildWolf\WordPress\LockUser\Plugin
  */
-class Test_Plugin extends WP_UnitTestCase /* NOSONAR */ {
+final class Test_Plugin extends WP_UnitTestCase /* NOSONAR */ {
 	public static function wp_login_hook(): void {
 		// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- CLI
 		throw new Exception( current_filter() ); // NOSONAR
@@ -22,6 +22,8 @@ class Test_Plugin extends WP_UnitTestCase /* NOSONAR */ {
 	 * @dataProvider data_wp_login
 	 * @uses \WildWolf\WordPress\LockUser\DateTimeUtils
 	 * @param string[] $allowed_ips
+	 * @param string $ip
+	 * @param string $message
 	 */
 	public function test_wp_login( array $allowed_ips, string $ip, string $message ): void {
 		add_action( 'wwl2uip_user_allowed', [ __CLASS__, 'wp_login_hook' ] );
